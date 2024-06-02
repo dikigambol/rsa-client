@@ -4,6 +4,8 @@ import Divisi from "./pages/divisi"
 import ListUser from "./pages/listUser"
 import Login from "./pages/login"
 import Struktural from "./pages/struktural"
+import Izin from "./pages/izin"
+import IzinAtasan from "./pages/izinAtasan"
 
 function App() {
   const [page, setpage] = useState("data-pegawai")
@@ -27,13 +29,19 @@ function App() {
                 <button className="btn btn-success mr-2 mb-3" type="button" onClick={() => setpage("data-struktural")}>
                   Data Struktural
                 </button>
-                <button className="btn btn-danger mr-2 mb-3" type="button">
+                <button className="btn btn-danger mr-2 mb-3" type="button" onClick={() => setpage("data-izin")}>
                   Data Izin
                 </button>
               </p>
               {page === "data-pegawai" && <ListUser />}
               {page === "data-divisi" && <Divisi />}
               {page === "data-struktural" && <Struktural />}
+              {page === "data-izin" &&
+                <>
+                  <Izin />
+                  <IzinAtasan />
+                </>
+              }
             </div>
           </div>
         </div>

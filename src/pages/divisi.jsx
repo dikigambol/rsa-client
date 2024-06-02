@@ -263,7 +263,11 @@ const Divisi = () => {
 
                             <form onSubmit={type === "add" ? handleSubmit : handleEdit}>
                                 <div className="modal-body">
-                                    <pre>API route create divisi (post): /divisi</pre>
+                                    <pre>
+                                        - API route create divisi (post): /divisi
+                                        <br />
+                                        - API route edit divisi (put): /divisi/:id
+                                    </pre>
                                     <div className="form-group">
                                         <label htmlFor="nama">Nama Divisi</label>
                                         <input type="text" required className="form-control" name="ket_divisi" value={form.ket_divisi} onChange={handlerInput} />
