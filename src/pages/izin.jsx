@@ -50,6 +50,7 @@ const Izin = () => {
             setloading_list_izin(false);
         } catch (error) {
             setisError(true)
+            setIzin([])
             setResponse({
                 url: error.response.config.url,
                 method: error.response.config.method,
@@ -170,6 +171,7 @@ const Izin = () => {
             });
             setisError(false)
         } catch (error) {
+            setIzin([])
             setisError(true)
             setform(initialState)
             setResponse({

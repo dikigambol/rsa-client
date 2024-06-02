@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { authInfo } from '../services/getUserInfo';
 
@@ -33,6 +33,7 @@ const IzinAtasan = () => {
             setloading_list_atsan(false);
         } catch (error) {
             setisError(true)
+            setAtasan([])
             setResponse({
                 url: error.response.config.url,
                 method: error.response.config.method,
