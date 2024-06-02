@@ -1,34 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// eslint-disable-next-line no-unused-vars
+import { useState } from "react"
+import Divisi from "./pages/divisi"
+import ListUser from "./pages/listUser"
+import Login from "./pages/login"
+import Struktural from "./pages/struktural"
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [page, setpage] = useState("data-pegawai")
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="container-fluid p-4">
+      <div className="row">
+        <div className="col-md-4 mb-3">
+          <Login />
+        </div>
+        <div className="col-md-8">
+          <div className="row">
+            <div className="col-md-12 mb-3">
+              <p className="m-0">
+                <button className="btn btn-primary mr-2 mb-3" type="button" onClick={() => setpage("data-pegawai")}>
+                  Data Pegawai
+                </button>
+                <button className="btn btn-warning mr-2 mb-3" type="button" onClick={() => setpage("data-divisi")}>
+                  Data Divisi
+                </button>
+                <button className="btn btn-success mr-2 mb-3" type="button" onClick={() => setpage("data-struktural")}>
+                  Data Struktural
+                </button>
+                <button className="btn btn-danger mr-2 mb-3" type="button">
+                  Data Izin
+                </button>
+              </p>
+              {page === "data-pegawai" && <ListUser />}
+              {page === "data-divisi" && <Divisi />}
+              {page === "data-struktural" && <Struktural />}
+            </div>
+          </div>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
+
   )
 }
 

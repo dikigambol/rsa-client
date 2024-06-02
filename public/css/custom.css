@@ -1,0 +1,173 @@
+/*general*/
+.home-wrapper .main-container, .mini-container{
+	max-width: 85vw;
+	margin: auto;
+}
+
+/*nav*/
+.home-wrapper #navbar{
+	height: 132px;
+	line-height: 125px;
+}
+
+.home-wrapper #navbar .logo-brand{
+	max-width: 150px;
+}
+
+.home-wrapper #addition{
+	position: relative;
+	background-color: transparent;
+}
+
+.home-wrapper #addition img.left, .home-wrapper #addition img.right{
+	position: absolute;
+	bottom: 0;
+}
+
+.home-wrapper #addition img.left{
+	left: 0;
+}
+
+.home-wrapper #addition img.right{
+	right: 0;
+}
+
+.home-wrapper #home{
+	height: calc(100vh - 134px);
+	overflow: hidden;
+}
+
+.modal-up{
+	position: absolute;
+	background-color: rgba(255, 255, 255, 0.6);
+	backdrop-filter: blur(60px);
+	width: 100%;
+	height: 0;
+	top: 0;
+	overflow: hidden;
+	box-shadow: 0 -1px 40px rgba(0, 0, 0, 0.25);
+	transition: all 0.5s ease-in-out;
+}
+
+.modal-up.show{
+	height: 100vh;
+	padding: 44px;
+	overflow-y: auto;
+}
+
+.form-title{
+	color: #000000;
+}
+
+.form-control, .custom-file-label, .custom-file-label::after{
+	font-size: 14px;
+	height: 50px;
+}
+
+.custom-file-label, .custom-file-label::after{
+	line-height: 35px;
+}
+
+textarea.form-control{
+	height: 124px;
+}
+
+#editor{
+	height: 420px;
+	resize: none;
+}
+
+.media-wrapper {
+	max-width: 842px;
+	height: 1191.54px;
+	margin: auto;
+	padding: 50px;
+	color: #000000;
+	font-size: 17px;
+}
+
+.divider{
+	position: relative;
+	background-color: #156082;
+	height: 4px;
+	margin: 20px -3%;
+	width: 106%;
+}
+
+.divider::before{
+	content: '';
+	background-color: #156082;
+	position: absolute;
+	width: 100%;
+	height: 2px;
+	bottom: -5px;
+}
+
+.media-wrapper table > * {
+	color: #000000;
+}
+
+.media-wrapper table tr td{
+	border: none;
+}
+
+.media-wrapper .asia-logo img, .media-wrapper .upt-logo img{
+	display: block;
+	margin: auto;
+}
+
+.media-wrapper .upt-logo img{
+	height: 80px;
+}
+
+.media-wrapper .heading h5{
+	font-size: 22px;
+}
+
+.media-wrapper .qr-code{
+	width: 130px;
+}
+
+
+@media (min-width: 376px) {
+	.home-wrapper #addition img.left, .home-wrapper #addition img.right{
+		width: 34%;
+	}
+
+	.display-5{
+		font-size: 25px;
+	}
+}
+
+@media (min-width: 768px) {
+	.home-wrapper #addition img.left, .home-wrapper #addition img.right{
+		width: 50%;
+	}
+	.display-5{
+		font-size: 30px;
+	}
+}
+
+@media (min-width: 992px) {
+	.home-wrapper #addition img.left, .home-wrapper #addition img.right{
+		width: auto;
+	}
+	.display-5{
+		font-size: 36px;
+	}
+}
+
+@media (min-width: 1200px) {
+
+}
+
+@media (min-width: 1400px) {
+
+}
+
+pre {
+	background-color: #f8f9fa;
+	padding: 15px;
+	border-radius: 5px;
+	border: 1px solid #e9ecef;
+}
