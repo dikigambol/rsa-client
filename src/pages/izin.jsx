@@ -4,7 +4,7 @@ import axios from 'axios';
 import { authInfo } from '../services/getUserInfo';
 
 const initialState = {
-    no_pegawai: sessionStorage.getItem('token') ? authInfo().nopeg : '',
+    no_pegawai: sessionStorage.getItem('token') ? authInfo().nopeg : 'xxx',
     tgl_izin: '',
     keterangan: '',
     status_izin: 0

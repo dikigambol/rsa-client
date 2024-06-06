@@ -10,7 +10,7 @@ const IzinAtasan = () => {
     const [isError, setisError] = useState(false)
     const [response, setResponse] = useState(null);
     const [atasan, setAtasan] = useState([])
-    const no_pegawai = sessionStorage.getItem('token') ? authInfo().nopeg : ''
+    const no_pegawai = sessionStorage.getItem('token') ? authInfo().nopeg : 'xxx'
 
     const getListAtasan = async () => {
         setloading_list_atsan(true);
