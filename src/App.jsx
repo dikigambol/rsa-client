@@ -6,6 +6,8 @@ import Login from "./pages/login"
 import Struktural from "./pages/struktural"
 import Izin from "./pages/izin"
 import IzinAtasan from "./pages/izinAtasan"
+import FakeToken from "./pages/fakeToken"
+import Injeksi from "./pages/injeksiSql"
 
 function App() {
   const [page, setpage] = useState("data-pegawai")
@@ -32,6 +34,12 @@ function App() {
                 <button className="btn btn-danger mr-2 mb-3" type="button" onClick={() => setpage("data-izin")}>
                   Data Izin
                 </button>
+                <button className="btn btn-secondary mr-2 mb-3" type="button" onClick={() => setpage("spoofing")}>
+                  Spoofing Token
+                </button>
+                <button className="btn btn-secondary mr-2 mb-3" type="button" onClick={() => setpage("injeksi")}>
+                  Injeksi SQL
+                </button>
               </p>
               {page === "data-pegawai" && <ListUser />}
               {page === "data-divisi" && <Divisi />}
@@ -42,6 +50,8 @@ function App() {
                   <IzinAtasan />
                 </>
               }
+              {page === "spoofing" && <FakeToken />}
+              {page === "injeksi" && <Injeksi />}
             </div>
           </div>
         </div>
