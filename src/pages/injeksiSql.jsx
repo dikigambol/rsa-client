@@ -44,7 +44,19 @@ export default function Injeksi() {
                 );
                 setResponse(result.data);
                 setLoadingAuth(false);
-            } else {
+            } else if (form.method == "DELETE") {
+                const result = await axios.delete(`http://localhost:5000${form.url}`,
+                    {
+                        headers: {
+                            "Content-type": "application/json",
+                            "authorization": "Bearer " + sessionStorage.getItem('token')
+                        },
+                    }
+                );
+                setResponse(result.data);
+                setLoadingAuth(false);
+            }
+            else {
                 setResponse({ error: "method not set" });
                 setResponse(result.data);
                 setLoadingAuth(false);
@@ -66,6 +78,7 @@ export default function Injeksi() {
                             <option value="">- pilih -</option>
                             <option value="GET">GET</option>
                             <option value="POST">POST</option>
+                            <option value="DELETE">DELETE</option>
                         </select>
                     </div>
                     <div className="form-group">
