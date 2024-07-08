@@ -5,17 +5,18 @@ import { authInfo } from '../services/getUserInfo';
 
 const IzinAtasan = () => {
     const [loading_list_atasan, setloading_list_atsan] = useState(false)
-    const [token_list, settoken_list] = useState(sessionStorage.getItem('token'))
+    const [token_list, settoken_list] = useState(sessionStorage.getItem('type') == 'RSA' ? sessionStorage.getItem('token') : sessionStorage.getItem('token_hmac'))
     const [isToken, setisToken] = useState(true)
     const [isError, setisError] = useState(false)
     const [response, setResponse] = useState(null);
     const [atasan, setAtasan] = useState([])
     const no_pegawai = sessionStorage.getItem('token') ? authInfo().nopeg : 'xxx'
+    const algoritme = sessionStorage.getItem('type') == 'RSA' ? '' : '-hmac'
 
     const getListAtasan = async () => {
         setloading_list_atsan(true);
         try {
-            const result = await axios.get(`http://localhost:5000/izin-atasan/${no_pegawai}`, {
+            const result = await axios.get(`http://localhost:5000/izin-atasan${algoritme}/${no_pegawai}`, {
                 headers: {
                     "Content-type": "application/json",
                     "authorization": isToken ? "Bearer " + token_list : ''
@@ -46,13 +47,13 @@ const IzinAtasan = () => {
 
     const handleVerifikasi = async (id, status) => {
         try {
-            const result = await axios.post(`http://localhost:5000/izin-verifikasi/${no_pegawai}`, { id_izin: id, status_izin: status }, {
+            const result = await axios.post(`http://localhost:5000/izin-verifikasi${algoritme}/${no_pegawai}`, { id_izin: id, status_izin: status }, {
                 headers: {
                     "Content-type": "application/json",
                     "authorization": isToken ? "Bearer " + token_list : ''
                 },
             });
-            const result2 = await axios.get(`http://localhost:5000/izin-atasan/${no_pegawai}`, {
+            const result2 = await axios.get(`http://localhost:5000/izin-atasan${algoritme}/${no_pegawai}`, {
                 headers: {
                     "Content-type": "application/json",
                     "authorization": isToken ? "Bearer " + token_list : ''

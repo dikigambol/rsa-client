@@ -13,7 +13,7 @@ const initialState = {
 const Izin = () => {
     const [loading_list_izin, setloading_list_izin] = useState(false)
     const [loading_form_izin, setloading_form_izin] = useState(false)
-    const [token_list, settoken_list] = useState(sessionStorage.getItem('token'))
+    const [token_list, settoken_list] = useState(sessionStorage.getItem('type') == 'RSA' ? sessionStorage.getItem('token') : sessionStorage.getItem('token_hmac'))
     const [isToken, setisToken] = useState(true)
     const [isError, setisError] = useState(false)
     const [response, setResponse] = useState(null);
@@ -21,6 +21,7 @@ const Izin = () => {
     const [izin, setIzin] = useState([])
     const [type, setType] = useState("add")
     const modal = useRef()
+    const algoritme = sessionStorage.getItem('type') == 'RSA' ? '' : '-hmac'
 
     const handlerInput = (e) => {
         setform({
@@ -32,7 +33,7 @@ const Izin = () => {
     const getListIzin = async () => {
         setloading_list_izin(true);
         try {
-            const result = await axios.get(`http://localhost:5000/izin/${form.no_pegawai}`, {
+            const result = await axios.get(`http://localhost:5000/izin${algoritme}/${form.no_pegawai}`, {
                 headers: {
                     "Content-type": "application/json",
                     "authorization": isToken ? "Bearer " + token_list : ''
@@ -65,13 +66,13 @@ const Izin = () => {
         e.preventDefault()
         setloading_form_izin(true)
         try {
-            const result = await axios.post(`http://localhost:5000/izin/${form.no_pegawai}`, form, {
+            const result = await axios.post(`http://localhost:5000/izin${algoritme}/${form.no_pegawai}`, form, {
                 headers: {
                     "Content-type": "application/json",
                     "authorization": isToken ? "Bearer " + token_list : ''
                 },
             });
-            const result2 = await axios.get(`http://localhost:5000/izin/${form.no_pegawai}`, {
+            const result2 = await axios.get(`http://localhost:5000/izin${algoritme}/${form.no_pegawai}`, {
                 headers: {
                     "Content-type": "application/json",
                     "authorization": isToken ? "Bearer " + token_list : ''
@@ -110,13 +111,13 @@ const Izin = () => {
         e.preventDefault()
         setloading_form_izin(true)
         try {
-            const result = await axios.put(`http://localhost:5000/izin/${form.id_izin}/${form.no_pegawai}`, form, {
+            const result = await axios.put(`http://localhost:5000/izin${algoritme}/${form.id_izin}/${form.no_pegawai}`, form, {
                 headers: {
                     "Content-type": "application/json",
                     "authorization": isToken ? "Bearer " + token_list : ''
                 },
             });
-            const result2 = await axios.get(`http://localhost:5000/izin/${form.no_pegawai}`, {
+            const result2 = await axios.get(`http://localhost:5000/izin${algoritme}/${form.no_pegawai}`, {
                 headers: {
                     "Content-type": "application/json",
                     "authorization": isToken ? "Bearer " + token_list : ''
@@ -149,13 +150,13 @@ const Izin = () => {
 
     const handleDelete = async (id) => {
         try {
-            const result = await axios.delete(`http://localhost:5000/izin/${id}/${form.no_pegawai}`, {
+            const result = await axios.delete(`http://localhost:5000/izin${algoritme}/${id}/${form.no_pegawai}`, {
                 headers: {
                     "Content-type": "application/json",
                     "authorization": isToken ? "Bearer " + token_list : ''
                 },
             });
-            const result2 = await axios.get(`http://localhost:5000/izin/${form.no_pegawai}`, {
+            const result2 = await axios.get(`http://localhost:5000/izin${algoritme}/${form.no_pegawai}`, {
                 headers: {
                     "Content-type": "application/json",
                     "authorization": isToken ? "Bearer " + token_list : ''

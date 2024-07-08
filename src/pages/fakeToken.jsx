@@ -1,11 +1,13 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { authInfo } from "../services/getUserInfo";
 
 export default function FakeToken() {
     const [response, setResponse] = useState(null);
     const [loading_auth, setLoadingAuth] = useState(false);
     const [form, setForm] = useState({});
     const [copySuccess, setCopySuccess] = useState('');
+    const nopeg = sessionStorage.getItem('token') ? authInfo().nopeg : 'xxx'
 
     const handleChange = (e) => {
         setForm({
@@ -18,7 +20,7 @@ export default function FakeToken() {
         event.preventDefault();
         setLoadingAuth(true);
         try {
-            const result = await axios.post('http://localhost:5000/fake-token', form);
+            const result = await axios.post(`http://localhost:5000/fake-token/${sessionStorage.getItem('type')}/${nopeg}`, form);
             setResponse(result.data);
             setLoadingAuth(false);
             setCopySuccess(''); // Reset copy success message
@@ -44,15 +46,15 @@ export default function FakeToken() {
                 <form onSubmit={handleSubmit}>
                     <div className="mb-2">
                         <label>Nopeg</label>
-                        <input className="form-control" name="nopeg" onChange={handleChange}/>
+                        <input className="form-control" name="nopeg" onChange={handleChange} />
                     </div>
                     <div className="mb-2">
                         <label>Name</label>
-                        <input className="form-control" name="name" onChange={handleChange}/>
+                        <input className="form-control" name="name" onChange={handleChange} />
                     </div>
                     <div className="mb-2">
                         <label>Role</label>
-                        <input className="form-control" name="role" onChange={handleChange}/>
+                        <input className="form-control" name="role" onChange={handleChange} />
                     </div>
                     <div className="mb-2">
                         <label>Claim</label>

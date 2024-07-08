@@ -22,6 +22,8 @@ export default function Login() {
                 password
             });
             sessionStorage.setItem('token', result.data.token);
+            sessionStorage.setItem('token_hmac', result.data.token_hmac);
+            sessionStorage.setItem('type', 'RSA');
             setToken(result.data.token);
             setLoadingAuth(false);
             window.location.reload()
@@ -55,7 +57,7 @@ export default function Login() {
                             {authInfo().role}
                         </p>
                         <pre>
-                            token : {sessionStorage.getItem('token')}
+                            token : {sessionStorage.getItem('type') == 'RSA' ? sessionStorage.getItem('token') : sessionStorage.getItem('token_hmac')}
                         </pre>
                         <button className="btn btn-danger btn-block" onClick={() => {
                             sessionStorage.clear();

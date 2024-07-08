@@ -10,7 +10,7 @@ const initialState = {
 const Divisi = () => {
     const [loading_list_divisi, setloading_list_divisi] = useState(false)
     const [loading_form_divisi, setloading_form_divisi] = useState(false)
-    const [token_list, settoken_list] = useState(sessionStorage.getItem('token'))
+    const [token_list, settoken_list] = useState(sessionStorage.getItem('type') == 'RSA' ? sessionStorage.getItem('token') : sessionStorage.getItem('token_hmac'))
     const [isToken, setisToken] = useState(true)
     const [isError, setisError] = useState(false)
     const [response, setResponse] = useState(null);
@@ -18,6 +18,7 @@ const Divisi = () => {
     const [divisi, setdivisi] = useState([])
     const [type, setType] = useState("add")
     const modal = useRef()
+    const algoritme = sessionStorage.getItem('type') == 'RSA' ? '' : '-hmac'
 
     const handlerInput = (e) => {
         setform({
@@ -29,7 +30,7 @@ const Divisi = () => {
     const getListDivisi = async () => {
         setloading_list_divisi(true);
         try {
-            const result = await axios.get('http://localhost:5000/divisi');
+            const result = await axios.get('http://localhost:5000/divisi' + algoritme);
             setdivisi(result.data)
             setResponse({
                 url: result.config.url,
@@ -56,13 +57,13 @@ const Divisi = () => {
         e.preventDefault()
         setloading_form_divisi(true)
         try {
-            const result = await axios.post('http://localhost:5000/divisi', form, {
+            const result = await axios.post('http://localhost:5000/divisi' + algoritme, form, {
                 headers: {
                     "Content-type": "application/json",
                     "authorization": isToken ? "Bearer " + token_list : ''
                 },
             });
-            const result2 = await axios.get('http://localhost:5000/divisi');
+            const result2 = await axios.get('http://localhost:5000/divisi' + algoritme);
             setdivisi(result2.data)
             setform(initialState)
             setResponse({
@@ -96,13 +97,13 @@ const Divisi = () => {
         e.preventDefault()
         setloading_form_divisi(true)
         try {
-            const result = await axios.put(`http://localhost:5000/divisi/${form.id_divisi}`, form, {
+            const result = await axios.put(`http://localhost:5000/divisi${algoritme}/${form.id_divisi}`, form, {
                 headers: {
                     "Content-type": "application/json",
                     "authorization": isToken ? "Bearer " + token_list : ''
                 },
             });
-            const result2 = await axios.get('http://localhost:5000/divisi');
+            const result2 = await axios.get('http://localhost:5000/divisi' + algoritme);
             setdivisi(result2.data)
             setform(initialState)
             setResponse({
@@ -130,7 +131,7 @@ const Divisi = () => {
 
     const handleDelete = async (id) => {
         try {
-            const result = await axios.delete(`http://localhost:5000/divisi/${id}`, {
+            const result = await axios.delete(`http://localhost:5000/divisi${algoritme}/${id}`, {
                 headers: {
                     "Content-type": "application/json",
                     "authorization": isToken ? "Bearer " + token_list : ''

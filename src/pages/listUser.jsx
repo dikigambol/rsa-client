@@ -26,7 +26,7 @@ const initialState = {
 const ListUser = () => {
     const [loading_list_user, setloading_list_user] = useState(false)
     const [list_user, setlist_user] = useState([])
-    const [token_list, settoken_list] = useState(sessionStorage.getItem('token'))
+    const [token_list, settoken_list] = useState(sessionStorage.getItem('type') == 'RSA' ? sessionStorage.getItem('token') : sessionStorage.getItem('token_hmac'))
     const [isToken, setisToken] = useState(true)
     const [isError, setisError] = useState(false)
     const [response, setResponse] = useState(null);
@@ -36,6 +36,7 @@ const ListUser = () => {
     const [divisi, setdivisi] = useState([])
     const modal = useRef()
     const modal2 = useRef()
+    const algoritme = sessionStorage.getItem('type') == 'RSA' ? '' : '-hmac'
 
     const handlerInput = (e) => {
         setform({
@@ -47,13 +48,13 @@ const ListUser = () => {
     const getListUser = async () => {
         setloading_list_user(true);
         try {
-            const result = await axios.get('http://localhost:5000/user', {
+            const result = await axios.get('http://localhost:5000/user' + algoritme, {
                 headers: {
                     "Content-type": "application/json",
                     "authorization": isToken ? "Bearer " + token_list : ''
                 },
             });
-            const resdivisi = await axios.get('http://localhost:5000/divisi');
+            const resdivisi = await axios.get('http://localhost:5000/divisi' + algoritme);
             setdivisi(resdivisi.data)
             setResponse({
                 url: result.config.url,
@@ -82,13 +83,13 @@ const ListUser = () => {
         e.preventDefault()
         setloading_add_user(true)
         try {
-            const result = await axios.post('http://localhost:5000/create-user', form, {
+            const result = await axios.post('http://localhost:5000/create-user' + algoritme, form, {
                 headers: {
                     "Content-type": "application/json",
                     "authorization": isToken ? "Bearer " + token_list : ''
                 },
             });
-            const result2 = await axios.get('http://localhost:5000/user', {
+            const result2 = await axios.get('http://localhost:5000/user' + algoritme, {
                 headers: {
                     "Content-type": "application/json",
                     "authorization": isToken ? "Bearer " + token_list : ''
@@ -121,7 +122,7 @@ const ListUser = () => {
 
     const handleDetail = async (id) => {
         try {
-            const result = await axios.get(`http://localhost:5000/user?nopeg=${id}`, {
+            const result = await axios.get(`http://localhost:5000/user${algoritme}?nopeg=${id}`, {
                 headers: {
                     "Content-type": "application/json",
                     "authorization": isToken ? "Bearer " + token_list : ''
@@ -151,13 +152,13 @@ const ListUser = () => {
         e.preventDefault()
         setloading_edit_user(true);
         try {
-            const result = await axios.post(`http://localhost:5000/user?nopeg=${form.no_pegawai}`, form, {
+            const result = await axios.post(`http://localhost:5000/user${algoritme}?nopeg=${form.no_pegawai}`, form, {
                 headers: {
                     "Content-type": "application/json",
                     "authorization": isToken ? "Bearer " + token_list : ''
                 },
             });
-            const result2 = await axios.get('http://localhost:5000/user', {
+            const result2 = await axios.get('http://localhost:5000/user' + algoritme, {
                 headers: {
                     "Content-type": "application/json",
                     "authorization": isToken ? "Bearer " + token_list : ''

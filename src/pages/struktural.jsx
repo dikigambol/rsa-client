@@ -11,7 +11,7 @@ const initialState = {
 const Struktural = () => {
     const [loading_list_struktural, setloading_list_struktural] = useState(false)
     const [loading_form_struktural, setloading_form_struktural] = useState(false)
-    const [token_list, settoken_list] = useState(sessionStorage.getItem('token'))
+    const [token_list, settoken_list] = useState(sessionStorage.getItem('type') == 'RSA' ? sessionStorage.getItem('token') : sessionStorage.getItem('token_hmac'))
     const [isToken, setisToken] = useState(true)
     const [isError, setisError] = useState(false)
     const [response, setResponse] = useState(null);
@@ -21,6 +21,7 @@ const Struktural = () => {
     const [struktural, setstruktural] = useState([])
     const [type, setType] = useState("add")
     const modal = useRef()
+    const algoritme = sessionStorage.getItem('type') == 'RSA' ? '' : '-hmac'
 
     const handlerInput = (e) => {
         setform({
@@ -32,7 +33,7 @@ const Struktural = () => {
     const getListStruktural = async () => {
         setloading_list_struktural(true);
         try {
-            const result = await axios.get('http://localhost:5000/struktural');
+            const result = await axios.get('http://localhost:5000/struktural' + algoritme);
             setstruktural(result.data)
             setResponse({
                 url: result.config.url,
@@ -57,13 +58,13 @@ const Struktural = () => {
         e.preventDefault()
         setloading_form_struktural(true)
         try {
-            const result = await axios.post('http://localhost:5000/struktural', form, {
+            const result = await axios.post('http://localhost:5000/struktural' + algoritme, form, {
                 headers: {
                     "Content-type": "application/json",
                     "authorization": isToken ? "Bearer " + token_list : ''
                 },
             });
-            const result2 = await axios.get('http://localhost:5000/struktural');
+            const result2 = await axios.get('http://localhost:5000/struktural' + algoritme);
             setstruktural(result2.data)
             setform(initialState)
             setResponse({
@@ -97,13 +98,13 @@ const Struktural = () => {
         e.preventDefault()
         setloading_form_struktural(true)
         try {
-            const result = await axios.put(`http://localhost:5000/struktural/${form.id_struktural}`, form, {
+            const result = await axios.put(`http://localhost:5000/struktural${algoritme}/${form.id_struktural}`, form, {
                 headers: {
                     "Content-type": "application/json",
                     "authorization": isToken ? "Bearer " + token_list : ''
                 },
             });
-            const result2 = await axios.get('http://localhost:5000/struktural');
+            const result2 = await axios.get('http://localhost:5000/struktural' + algoritme);
             setstruktural(result2.data)
             setform(initialState)
             setResponse({
@@ -131,13 +132,13 @@ const Struktural = () => {
 
     const handleDelete = async (id) => {
         try {
-            const result = await axios.delete(`http://localhost:5000/struktural/${id}`, {
+            const result = await axios.delete(`http://localhost:5000/struktural${algoritme}/${id}`, {
                 headers: {
                     "Content-type": "application/json",
                     "authorization": isToken ? "Bearer " + token_list : ''
                 },
             });
-            const result2 = await axios.get('http://localhost:5000/struktural');
+            const result2 = await axios.get('http://localhost:5000/struktural' + algoritme);
             setstruktural(result2.data)
             setform(initialState)
             setResponse({
@@ -160,8 +161,8 @@ const Struktural = () => {
     }
 
     const getDropdown = async () => {
-        const result = await axios.get('http://localhost:5000/divisi');
-        const result2 = await axios.get('http://localhost:5000/user', {
+        const result = await axios.get('http://localhost:5000/divisi' + algoritme);
+        const result2 = await axios.get('http://localhost:5000/user' + algoritme, {
             headers: {
                 "Content-type": "application/json",
                 "authorization": isToken ? "Bearer " + token_list : ''

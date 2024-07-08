@@ -14,6 +14,10 @@ function App() {
 
   return (
     <div className="container-fluid p-4">
+      <select className="form-control mb-3" onChange={(e) => (sessionStorage.setItem('type', e.target.value), window.location.reload())}>
+        <option value="RSA" selected={sessionStorage.getItem('type') == "RSA" ? true : false}>RSA</option>
+        <option value="HMAC" selected={sessionStorage.getItem('type') == "HMAC" ? true : false}>HMAC</option>
+      </select>
       <div className="row">
         <div className="col-md-4 mb-3">
           <Login />
@@ -57,7 +61,6 @@ function App() {
         </div>
       </div>
     </div>
-
   )
 }
 
